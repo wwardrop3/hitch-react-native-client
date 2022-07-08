@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/hitch_new_small5.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,7 +18,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ridebaton.Baton",
+      "config": {
+        "googlemapsapikey": "AIzaSyBCOueWJQtA2QfldCu7_QqN_69X76-F4a8"
+      }
     },
     "android": {
       "adaptiveIcon": {
