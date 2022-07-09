@@ -19,10 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ridebaton.Baton",
-      "config": {
-        "googlemapsapikey": "AIzaSyBCOueWJQtA2QfldCu7_QqN_69X76-F4a8"
-      }
+      "bundleIdentifier": "com.ridebaton.baton"
     },
     "android": {
       "adaptiveIcon": {
