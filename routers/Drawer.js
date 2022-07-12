@@ -33,11 +33,6 @@ export default function Drawer({ token }) {
             } />
 
 
-            <Drawer.Screen name="SelectDateTime" component={SelectDateTime} token={token} options={{
-                headerTitle: () => <Header headerTitle="Select Date Time" />
-
-            }
-            } />
         </Drawer.Navigator>
 
     )

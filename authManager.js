@@ -50,13 +50,13 @@ export const get_member = (token) => {
     }).then(res => res.json().catch((e) => console.log(e)))
 }
 
-export const create_new_driver_trip = (trip) => {
+export const create_new_driver_trip = (trip, token) => {
     return fetch(`${host}/driver_trips`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Token ${localStorage.getItem("token")}`
+            "Authorization": `Token ${token}`
         },
         body: JSON.stringify(trip)
-    }).then(res => res.json())
+    }).then(res => res.json().catch((e) => console.log(e)))
 }

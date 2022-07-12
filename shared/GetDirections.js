@@ -18,7 +18,7 @@ export const getDirections = async (startLoc, destinationLoc, directionObject, s
         });
         setDirectionsObject({
             path: coords,
-            directionObject: respJson
+            directionOverview: respJson
         })
         return directionsObject;
     } catch (error) {

@@ -3,12 +3,15 @@ import { Button, KeyboardAvoidingView, Modal, SafeAreaView, ScrollView, StyleShe
 import { globalStyles } from "../styles/global";
 import Constants from 'expo-constants';
 import SearchBox from "../components/SearchBox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { create_new_driver_trip } from "../authManager";
 import { getDirections } from "../shared/GetDirections";
 import SelectDateTime from "../shared/SelectDateTime";
+import * as SecureStore from 'expo-secure-store'
+import TripList from "./TripList";
 
-export default function NewDriverTrip() {
+
+export default function NewDriverTrip({ navigation }) {
 
     const [directionObject, setDirectionsObject] = useState()
     const [origin, setOrigin] = useState()
@@ -17,23 +20,64 @@ export default function NewDriverTrip() {
     const [destinationPlace, setDestinationPlace] = useState()
     const [startDate, setStartDate] = useState(new Date())
     const [showDate, setShowDate] = useState(false)
+    const [token, setToken] = useState()
+
+
+    async function getValueFor(key) {
 
 
 
+        let result = await SecureStore.getItemAsync(key);
+        if (result) {
+            // alert("🔐 Here's your value 🔐 \n" + result);
+            return result
+        } else {
+            alert('No values stored under that key.');
+        }
+    }
 
-    const handleSubmit = () => {
-        const directions = getDirections(`${origin.lat},${origin.lng}`, `${destination.lat}, ${destination.lng}`, directionObject, setDirectionsObject)
+
+    const handleSubmit = (values) => {
+        const directions = getDirections(`${origin?.lat},${origin.lng}`, `${destination.lat}, ${destination.lng}`, directionObject, setDirectionsObject)
         const newTrip = {}
+        newTrip.detour_radius = parseInt(values.detourRadius)
+        newTrip.seats = values.seatsAvailable
+        newTrip.trip_summary = values.tripSummary
         newTrip.origin = origin
+        newTrip.completed = false
+        newTrip.completion_date = ""
+        newTrip.creation_date = ""
+        newTrip.tags = ""
         newTrip.destination = destination
-        newTrip.originPlace = originPlace
-        newTrip.destinationPlace = directionObject
-        newTrip.directions = directions
+        newTrip.origin_place = originPlace
+        newTrip.destination_place = destinationPlace
+        console.log(directionObject.directionOverview)
+        newTrip.start_date = startDate
+        newTrip.path = directionObject?.directionOverview.routes[0].overview_polyline.points
+        newTrip.is_approved = false
+        newTrip.trip_distance = directionObject?.directionOverview.routes[0].legs[0].distance.value
+        newTrip.expected_travel_time = directionObject?.directionOverview.routes[0].legs[0].duration.value
 
-        // create_new_driver_trip(newTrip)
-        console.log(directionObject.path)
+
+        create_new_driver_trip(newTrip, token).then(e => navigation.navigate('HomeStack', { screen: 'HomePage' }))
+
+        console.log(newTrip)
+        newTrip = {}
+
+
 
     }
+
+    useEffect(
+        () => {
+            getValueFor('token')
+                .then(
+                    (response) => {
+                        setToken(response)
+                    }
+                )
+        }, []
+    )
 
 
 
@@ -112,18 +156,18 @@ export default function NewDriverTrip() {
                                     <View style={{ width: "100%", flex: 1 }} >
                                         <View style={globalStyles.container}>
 
-                                            <SearchBox searchLocation={origin} setSearchLocation={setOrigin} setOriginPlace={setOriginPlace} originPlace={setOriginPlace} />
+                                            <SearchBox searchLocation={origin} setSearchLocation={setOrigin} setLocationPlace={setOriginPlace} />
                                         </View>
 
                                         <View style={globalStyles.container} >
-                                            <SearchBox searchLocation={destination} setSearchLocation={setDestination} setDestinationPlace={setDestinationPlace} destinationPlace={destinationPlace} />
+                                            <SearchBox searchLocation={destination} setSearchLocation={setDestination} setLocationPlace={setDestinationPlace} />
                                         </View>
                                     </View>
 
 
 
                                 </View>
-                                <View>
+                                <View style={{ position: "absolute" }}>
                                     <Button title="Submit" color='maroon' onPress={props.handleSubmit} />
 
                                 </View>

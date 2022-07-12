@@ -189,7 +189,7 @@ export default function HomePage({ navigation }) {
             id: trip.id,
             color: "red"
         })
-        setInitialRegion(false)
+
     }
 
     const transformPoints = (pathPoints) => {
@@ -255,10 +255,10 @@ export default function HomePage({ navigation }) {
                 <View style={{ height: "50%" }} >
 
 
-                    <MapView region={initialRegion ? null : region} initialRegion={region}
+                    <MapView region={initialRegion ? region : region} initialRegion={region}
                         showsMyLocationButton={true} showsCompass={true} style={{ height: "100%", width: "100%" }} provider={PROVIDER_DEFAULT} customMapStyle={mapStyle}>
                         <View>
-                            <SearchBox searchLocation={searchLocation} setSearchLocation={setSearchLocation} text={text} setText={setText} initialRegion={initialRegion} setInitialRegion={setInitialRegion} />
+                            <SearchBox searchLocation={searchLocation} setSearchLocation={setSearchLocation} text={text} setText={setText} />
                         </View>
 
                         {trips ? trips.map((trip) => {

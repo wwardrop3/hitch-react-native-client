@@ -5,7 +5,7 @@ import Geocoder from 'react-native-geocoding';
 import { useEffect, useState } from 'react';
 
 
-const SearchBox = ({ searchLocation, setSearchLocation, initialRegion, setInitialRegion }) => {
+const SearchBox = ({ searchLocation, setSearchLocation, initialRegion, setInitialRegion, setLocationPlace = "" }) => {
 
     Geocoder.init("AIzaSyBCOueWJQtA2QfldCu7_QqN_69X76-F4a8")
 
@@ -13,12 +13,10 @@ const SearchBox = ({ searchLocation, setSearchLocation, initialRegion, setInitia
         Geocoder.from(searchValue)
             .then(json => {
                 setSearchLocation(json.results[0].geometry.location)
+                setLocationPlace(json.results[0].formatted_address)
+
             })
-            .then(
-                () => {
-                    setInitialRegion(false)
-                }
-            )
+
             .catch(error => console.warn(error))
     }
 
@@ -38,7 +36,6 @@ const SearchBox = ({ searchLocation, setSearchLocation, initialRegion, setInitia
                     geocodeAddress(data.description)
 
                 }}
-                GooglePlacesDetailsQuery
                 getDefaultValue={() => ''}
 
                 query={{
