@@ -60,3 +60,13 @@ export const create_new_driver_trip = (trip, token) => {
         body: JSON.stringify(trip)
     }).then(res => res.json().catch((e) => console.log(e)))
 }
+
+
+export const delete_driver_trip = (id, token) => {
+    return fetch(`${host}/driver_trips/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Token ${token}`
+        }
+    }).catch(e => console.log(e))
+}

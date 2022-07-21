@@ -4,8 +4,8 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import AppStack from './routers/AppStack';
 import Drawer from './routers/Drawer';
 
-// export const host = "https://hitch-capstone-server.herokuapp.com"
-export const host = "http://localhost:8000"
+export const host = "https://hitch-capstone-server.herokuapp.com"
+// export const host = "http://localhost:8000"
 
 
 

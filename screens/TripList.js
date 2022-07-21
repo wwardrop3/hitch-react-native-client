@@ -9,7 +9,7 @@ import TypeSelect from "../components/TypeSelect";
 
 
 
-export default function TripList({ navigation, trips, setTrips }) {
+export default function TripList({ navigation, trips, setTrips, refresh, setRefresh }) {
 
     const [showModal, setShowModal] = useState(false)
 
@@ -18,7 +18,10 @@ export default function TripList({ navigation, trips, setTrips }) {
 
     const handlePress = () => {
         // navigation.navigate('ReviewDetails')
-        navigation.push('ReviewDetails')
+        navigation.push('ReviewDetails', {
+            refresh: refresh,
+            setRefresh: setRefresh
+        })
     }
 
     {
@@ -84,7 +87,11 @@ export default function TripList({ navigation, trips, setTrips }) {
                     <FlatList
                         data={trips}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('ReviewDetails', item)}>
+                            <TouchableOpacity onPress={() => navigation.navigate('ReviewDetails', {
+                                item: item,
+                                refresh: refresh,
+                                setRefresh: setRefresh
+                            })}>
                                 <Card>
                                     <Text style={globalStyles.titleText} >{item.driver?.user.first_name}</Text>
                                 </Card>

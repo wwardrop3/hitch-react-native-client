@@ -11,7 +11,7 @@ import * as SecureStore from 'expo-secure-store'
 import TripList from "./TripList";
 
 
-export default function NewDriverTrip({ navigation }) {
+export default function NewDriverTrip({ navigation, refresh, setRefresh }) {
 
     const [directionObject, setDirectionsObject] = useState()
     const [origin, setOrigin] = useState()
@@ -51,7 +51,6 @@ export default function NewDriverTrip({ navigation }) {
         newTrip.destination = destination
         newTrip.origin_place = originPlace
         newTrip.destination_place = destinationPlace
-        console.log(directionObject.directionOverview)
         newTrip.start_date = startDate
         newTrip.path = directionObject?.directionOverview.routes[0].overview_polyline.points
         newTrip.is_approved = false
@@ -59,9 +58,8 @@ export default function NewDriverTrip({ navigation }) {
         newTrip.expected_travel_time = directionObject?.directionOverview.routes[0].legs[0].duration.value
 
 
-        create_new_driver_trip(newTrip, token).then(e => navigation.navigate('HomeStack', { screen: 'HomePage' }))
+        create_new_driver_trip(newTrip, token).then(() => setRefresh(!refresh)).catch(e => console.log(e)).then(e => navigation.navigate('HomeStack', { screen: 'HomePage' }))
 
-        console.log(newTrip)
         newTrip = {}
 
 

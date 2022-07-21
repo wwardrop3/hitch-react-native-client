@@ -5,7 +5,7 @@ import Geocoder from 'react-native-geocoding';
 import { useEffect, useState } from 'react';
 
 
-const SearchBox = ({ searchLocation, setSearchLocation, initialRegion, setInitialRegion, setLocationPlace = "" }) => {
+const SearchBox = ({ searchLocation, setSearchLocation, initialRegion, setInitialRegion, setLocationPlace }) => {
 
     Geocoder.init("AIzaSyBCOueWJQtA2QfldCu7_QqN_69X76-F4a8")
 

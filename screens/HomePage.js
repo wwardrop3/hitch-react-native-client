@@ -161,7 +161,7 @@ async function getValueFor(key) {
 
 
 
-export default function HomePage({ navigation }) {
+export default function HomePage({ navigation, refresh, setRefresh }) {
 
     const [initialRegion, setInitialRegion] = useState(true)
 
@@ -228,7 +228,7 @@ export default function HomePage({ navigation }) {
                     }
                 )
 
-        }, [searchLocation]
+        }, [searchLocation, refresh]
     )
 
 
@@ -327,7 +327,7 @@ export default function HomePage({ navigation }) {
             </TouchableWithoutFeedback >
             <View style={{ height: "50%" }}>
 
-                <TripList navigation={navigation} trips={trips.length > 0 ? trips : "No Trips In This Area"} initialRegion={initialRegion} setInitialRegion={setInitialRegion} />
+                <TripList refresh={refresh} setRefresh={setRefresh} navigation={navigation} trips={trips.length > 0 ? trips : "No Trips In This Area"} initialRegion={initialRegion} setInitialRegion={setInitialRegion} />
 
             </View>
 
